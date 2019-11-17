@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '../_models';
-import { first } from 'rxjs/operators';
-import {AuthenticationService, UserService} from '../_services';
+import {AuthenticationService} from '../_services';
 
 @Component({
   selector: 'app-home',
@@ -9,15 +7,11 @@ import {AuthenticationService, UserService} from '../_services';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  users: User[] = [];
 
-  constructor(private userService: UserService,
-              private authenticationService: AuthenticationService) { }
+  constructor() { }
 
   ngOnInit() {
-    // this.userService.getAll().pipe(first()).subscribe(users => {
-    //   this.users = users;
-    // });
+
   }
 
 }

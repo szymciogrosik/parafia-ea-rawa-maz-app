@@ -3,15 +3,13 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from '../_models';
-import {UserService} from './user.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
     private currentUserSubject: BehaviorSubject<User>;
     public currentUser: Observable<User>;
 
-    constructor(private http: HttpClient,
-                private userService: UserService) {
+    constructor(private http: HttpClient) {
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem(`${config.TOKEN_NAME}`)));
         this.currentUser = this.currentUserSubject.asObservable();
     }
@@ -33,7 +31,6 @@ export class AuthenticationService {
                   localStorage.setItem(`${config.TOKEN_NAME}`, JSON.stringify(user));
                   this.currentUserSubject.next(user);
                 }
-
                 return user;
             }));
     }
@@ -45,16 +42,12 @@ export class AuthenticationService {
     }
 
     refresh() {
-      console.log('refresh');
+      console.log('refresh token');
       return this.http.get(`${config.BACKEND_URL}/refresh`);
     }
 
     isLoggedIn(): boolean {
-      if (this.userService.loggedUser) {
-        return true;
-      } else {
-        return false;
-      }
+      return !!this.currentUserValue;
     }
 
     getAuthHeader() {

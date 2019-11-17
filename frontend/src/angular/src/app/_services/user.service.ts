@@ -11,10 +11,6 @@ export class UserService {
 
     constructor(private http: HttpClient) { }
 
-    getAll() {
-        return this.http.get<User[]>(`${config.BACKEND_URL}/users`);
-    }
-
     setLoggedUser(user: User) {
       this.loggedUser = user;
       this.loggedUserSubject.next(user);
